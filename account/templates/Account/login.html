@@ -1,0 +1,10 @@
+{% extends 'home.html' %}
+{% block loginform %}
+    {% load crispy_forms_tags %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="username"><br>
+        <input type="password" name="password"><br>
+        <input type="submit" value="Login">
+    </form>
+{% endblock loginform %}

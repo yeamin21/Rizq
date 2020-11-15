@@ -1,0 +1,41 @@
+{% extends "home.html" %}
+{% block foods %}
+    {% load static %}
+
+    <!-- Bootstrap core CSS -->
+    <main role="main">
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    {% for food in foods %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img class="bd-placeholder-img" src="{{ food.image.url }}" width="100%" height="225">
+                                <div class="card-body">
+                                    <p class="card-text">{{ food.name }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            {{ food.price }} tk
+                                        </div>
+                                        <small class="text-muted">Available at {{ food.restaurant }}</small>
+                                    </div>
+                                    {% if request.user.is_customer %}
+                                        <form method="post" action="{% url 'cart:add' food.id %}">
+                                            {% csrf_token %}
+                                            <input type="submit" value="add to cart">
+                                        </form>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <h1>No Food Available</h1>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+{% endblock foods %}

@@ -1,0 +1,22 @@
+{% extends 'home.html' %}
+{% block live %}
+    <center>
+    <body>
+
+    <iframe width="720"
+            height="480"
+            src="{{ url }}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    </body>
+    </center>
+{% endblock live %}
+
+{% block add_live_url %}
+    <form method="post" action="{% url 'restaurant:go-live' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="go live">
+    </form>
+{% endblock add_live_url %}

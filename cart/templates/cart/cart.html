@@ -1,0 +1,43 @@
+{% extends 'home.html' %}
+{% block cart_items %}
+    <table class="table">
+        <tr>
+            <th>
+                Product
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Restaurant
+            </th>
+        </tr>
+
+        {% for i in items %}
+            {% for x in  i.orderItem.all %}
+                <tr>
+                    <td>
+                        {{ x.item.name }}
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'cart:update' x.id %}">
+                            {% csrf_token %}
+                            <input type="number" value="{{ x.quantity }}" name="quantity">
+                        </form>
+                    </td>
+                    <td>
+                        {{ x.getTotal }}
+                    </td>
+                    <td>
+                        {{ x.item.restaurant }} <a href="{% url 'restaurant:see-live' x.item.restaurant.id %}">See Live</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+        {% endfor %}
+
+    </table>
+{% endblock cart_items %}
